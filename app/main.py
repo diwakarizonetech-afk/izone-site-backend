@@ -68,7 +68,11 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 app.add_middleware(SecurityHeadersMiddleware)
 
 # ── CORS ───────────────────────────────────────────────────────────────
-allowed_origins_list = [origin.strip() for origin in ALLOWED_ORIGINS.split(",")]
+allowed_origins_list = [
+    origin.strip().rstrip("/")
+    for origin in ALLOWED_ORIGINS.split(",")
+    if origin.strip()
+]
 logger.info(f"CORS allowed origins: {allowed_origins_list}")
 
 app.add_middleware(
